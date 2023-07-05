@@ -1,0 +1,80 @@
+# Create your models here.
+# Students; Department; Faculty; Course; Enrollment;
+'''
+What should my erp do:
+-> Let the students see their previous courses and the grades
+-> Let the students see the list of the courses they currently can register
+-> Let the students register for a course
+-> Let the students see their current courses they have enrolled
+-> Let the faculty see the courses they are taking
+-> Let the faculty see the enrolled students' roll number in each course
+-> Let the faculty deregister the enrolled student ( optional )
+-> Superuser handles all the assigning of the grades for each student for each course
+
+-> Sites: Studentlogin, FacultyLogin, SuperuserLogin, Department site
+'''
+
+from django.db import models
+import datetime
+
+from django.db import models
+from django.utils import timezone
+
+
+class department(models.Model):
+    department_id = models.IntegerField(primary_key = True)
+    name = models.CharField(max_length = 100)
+    department_head_id = models.IntegerField()
+    
+    def __str__(self):
+        return str(self.department_id)
+    
+class faculty(models.Model):
+    faculty_id = models.IntegerField(primary_key = True)
+    name = models.CharField(max_length = 100)
+    email = models.EmailField()
+    phone_number = models.CharField(max_length = 10)
+    department_id = models.ForeignKey(department, on_delete = models.CASCADE)
+    password = models.CharField(max_length = 100, default = 'password')
+    
+    def __str__(self):
+        return str(self.faculty_id)
+    
+class student(models.Model):
+    roll_number = models.CharField(max_length = 9, primary_key = True)
+    name = models.CharField(max_length = 100)
+    email = models.EmailField()
+    date_of_birth = models.DateField()
+    facad_id = models.ForeignKey(faculty, on_delete = models.CASCADE)
+    department_id = models.ForeignKey(department, on_delete = models.CASCADE)
+    password = models.CharField(max_length = 100, default = 'password')
+    
+    def __str__(self):
+        return self.roll_number
+
+class course(models.Model):
+    course_id = models.IntegerField(primary_key = True)
+    name = models.CharField(max_length = 100)
+    credits = models.IntegerField()
+    faculty_id = models.ForeignKey(faculty, on_delete = models.CASCADE)
+    department_id = models.ForeignKey(department, on_delete = models.CASCADE)
+    
+    def __str__(self):
+        return self.name
+    
+class enrollment(models.Model):
+    enrollment_id = models.IntegerField(primary_key = True)
+    roll_number = models.ForeignKey(student, on_delete = models.CASCADE)
+    course_id = models.ForeignKey(course, on_delete = models.CASCADE)
+    enrollment_date = models.DateField()
+    grade = models.IntegerField()
+    
+    def __str__(self):
+        return str(self.enrollment_id)
+        
+class prereq(models.Model):
+    c_id = models.ForeignKey(course, on_delete = models.CASCADE, related_name='%(class)s_requests_created')
+    p_id = models.ForeignKey(course, on_delete = models.CASCADE, related_name='%(class)s_requests_assigned')
+    
+    def __str__(self):
+        return str(self.c_id) + " " + str(self.p_id)

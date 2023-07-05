@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Enrollment Information for Course {{ course_id }}</h1>
+
+{% if enrollments %}
+<table>
+  <thead>
+    <tr>
+      <th>Roll Number</th>
+      <th>Enrollment Date</th>
+      <th>Grade</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for enrollment in enrollments %}
+    <tr>
+      <td>{{ enrollment.roll_number }}</td>
+      <td>{{ enrollment.enrollment_date }}</td>
+      <td>{{ enrollment.grade }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p>No enrollments found for this course.</p>
+{% endif %}
+{% endblock %}

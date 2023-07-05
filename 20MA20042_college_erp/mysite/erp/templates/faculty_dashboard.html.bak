@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Welcome, {{ faculty.name }}!</h1>
+  <p>Faculty ID : {{ faculty.faculty_id }}.</p>
+			{% with fid=faculty.faculty_id %}
+				<a href = "{% url 'faculty_course' faculty_id=fid %}">Current Courses</a>
+			{% endwith %}
+	<a href="{% url 'faculty_logout' %}">Logout</a>
+{% endblock %}

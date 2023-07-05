@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>List of Faculty Members</h1>
+<p>Department ID: {{ department_id }}</p>
+
+{% if faculty_members %}
+<ul>
+{% for faculty in faculty_members %}
+  <li>{{ faculty.name }} ({{ faculty.faculty_id }}) - {{ faculty.email }}</li>
+{% endfor %}
+</ul>
+{% else %}
+<p>No faculty members found for the specified department.</p>
+{% endif %}
+{% endblock %}

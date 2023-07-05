@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Courses Available for Enrollment</h1>
+<p>Roll Number: {{ roll_number }}</p>
+
+{% if courses %}
+<ul>
+{% for course in courses %}
+  <li>{{ course.name }} ({{ course.course_id }})</li>
+{% endfor %}
+</ul>
+{% else %}
+<p>No courses available for enrollment.</p>
+{% endif %}
+{% endblock %}

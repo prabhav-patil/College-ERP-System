@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Welcome, {{ student.name }}!</h1>
+  <p>Roll number : {{ student.roll_number }}.</p>
+  {% with rn=student.roll_number %}
+	<a href="{% url 'enrolled_courses' roll_number=rn %}">Enrolled Courses </a> </br>
+	<a href="{% url 'student_enrollable_courses' roll_number=rn %}">Courses Available </a> </br>
+  {% endwith %}
+	<a href="{% url 'student_logout' %}">Logout</a>
+{% endblock %}

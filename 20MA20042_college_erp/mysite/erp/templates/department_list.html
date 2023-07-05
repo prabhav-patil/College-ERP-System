@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>List of Departments</h1>
+<ul>
+{% for department in departments %}
+  <li>
+	{% with d_id=department.department_id %}
+		<a href="{% url 'faculty_by_department' department_id=d_id %}">{{ department.name }}</a>
+	{% endwith %}
+  </li>
+{% endfor %}
+</ul>
+{% endblock %}
